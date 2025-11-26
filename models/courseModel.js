@@ -3,10 +3,12 @@ import mongoose from "mongoose";
 const courseSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
+  about: { type: String }, // Additional about information
   shortDescription: { type: String, required: true },
   price: { type: Number, required: true },
   originalPrice: { type: Number }, // For showing discounts
   thumbnail: { type: String, required: true },
+  images: [{ type: String }], // Array of course images
   previewVideo: { type: String }, // Preview video URL
   category: { 
     type: String, 
