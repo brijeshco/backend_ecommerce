@@ -5,6 +5,7 @@ import {
   addCourse,
   updateCourse,
   removeCourse,
+  deleteAllCourses,
   getFeaturedCourses,
   getCoursesByCategory,
   getAllReviews,
@@ -49,6 +50,7 @@ courseRouter.put("/update/:id", adminAuth, upload.fields([
   { name: 'thumbnail9', maxCount: 1 }
 ]), updateCourse);
 courseRouter.post("/remove", adminAuth, removeCourse);
+courseRouter.post("/delete-all", adminAuth, deleteAllCourses);
 
 // Review management routes (Admin only)
 courseRouter.get("/reviews/all", adminAuth, getAllReviews);

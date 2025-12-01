@@ -350,6 +350,46 @@ const removeCourse = async (req, res) => {
   }
 };
 
+// Delete all courses (Admin only)
+const deleteAllCourses = async (req, res) => {
+  try {
+    console.log("🗑️ DELETE ALL COURSES - Starting deletion process...");
+    
+    // Get count before deletion for confirmation
+    const countBefore = await courseModel.countDocuments();
+    console.log(`Found ${countBefore} courses to delete`);
+    
+    if (countBefore === 0) {
+      return res.json({ 
+        success: true, 
+        message: "No courses to delete",
+        deletedCount: 0 
+      });
+    }
+    
+    // Delete all courses
+    const result = await courseModel.deleteMany({});
+    console.log(`Deleted ${result.deletedCount} courses`);
+    
+    // Also delete related enrollments and reviews
+    const enrollmentResult = await enrollmentModel.deleteMany({});
+    const reviewResult = await reviewModel.deleteMany({});
+    
+    console.log(`Also deleted ${enrollmentResult.deletedCount} enrollments and ${reviewResult.deletedCount} reviews`);
+    
+    res.json({ 
+      success: true, 
+      message: `Successfully deleted all ${result.deletedCount} courses`,
+      deletedCount: result.deletedCount,
+      enrollmentsDeleted: enrollmentResult.deletedCount,
+      reviewsDeleted: reviewResult.deletedCount
+    });
+  } catch (error) {
+    console.error("Delete All Courses Error:", error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
 // Get featured courses
 const getFeaturedCourses = async (req, res) => {
   try {
@@ -480,6 +520,7 @@ export {
   addCourse,
   updateCourse,
   removeCourse,
+  deleteAllCourses,
   getFeaturedCourses,
   getCoursesByCategory,
   getAllReviews,

@@ -7,7 +7,11 @@
     "start": "node server.js",
     "server": "nodemon server.js",
     "build": "echo 'Build completed'",
-    "vercel-build": "echo 'Vercel build completed'"
+    "vercel-build": "echo 'Vercel build completed'",
+    "upload-courses": "node scripts/uploadCourses.js",
+    "upload-bulk": "node scripts/uploadBulkCourses.js",
+    "upload-csvjson": "node scripts/uploadFromCSVJSON.js",
+    "check-courses": "node scripts/checkCourses.js"
   },
   "author": "",
   "license": "ISC",
